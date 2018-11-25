@@ -54,6 +54,8 @@ public class DataSink<T> {
 
 	private String name;
 
+	private boolean cachingInput = false;
+
 	private int parallelism = ExecutionConfig.PARALLELISM_DEFAULT;
 
 	private ResourceSpec minResources = ResourceSpec.DEFAULT;
@@ -65,6 +67,16 @@ public class DataSink<T> {
 	private int[] sortKeyPositions;
 
 	private Order[] sortOrders;
+
+	/**
+	 * The DataSet will remain in the TaskManagers' memory in the cluster after the associated job finishes.
+	 * This function should be used at the end of a chain of operators. It is intended to be used for series
+	 * of jobs where each job will reuse the results of the computation of the previous job.
+	 *
+	 */
+	public void cache() {
+		cachingInput = true;
+	}
 
 	public DataSink(DataSet<T> data, OutputFormat<T> format, TypeInformation<T> type) {
 		if (format == null) {
@@ -257,6 +269,8 @@ public class DataSink<T> {
 			}
 			sink.setLocalOrder(ordering);
 		}
+
+		sink.setCachingInput(this.cachingInput);
 
 		return sink;
 	}

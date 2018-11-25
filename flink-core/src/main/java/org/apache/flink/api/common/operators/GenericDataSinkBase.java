@@ -53,7 +53,17 @@ public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 
 	private Ordering localOrdering;
 
+	private boolean cachingInput = false;
+
 	// --------------------------------------------------------------------------------------------
+
+	public boolean cachingInput() {
+		return cachingInput;
+	}
+
+	public void setCachingInput(boolean cachingInput) {
+		this.cachingInput = cachingInput;
+	}
 
 	/**
 	 * Creates a GenericDataSink with the provided {@link org.apache.flink.api.common.io.OutputFormat} implementation
