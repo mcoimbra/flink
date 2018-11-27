@@ -57,10 +57,18 @@ public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 
 	// --------------------------------------------------------------------------------------------
 
+	/**
+	 * Check if the data emitted by the data sink (to secondary storage or some other medium) is to be stored in the cluster memory.
+	 * @return True if the data sink is set to keep its emitted data is to remain stored in the cluster memory.
+	 */
 	public boolean cachingInput() {
 		return cachingInput;
 	}
 
+	/**
+	 * Set the data sink emitted data lifetime in the cluster memory after the job finishes.
+	 * @param cachingInput The desired behavior for the data sink data that is emitted to secondary storage or some other medium.
+	 */
 	public void setCachingInput(boolean cachingInput) {
 		this.cachingInput = cachingInput;
 	}
